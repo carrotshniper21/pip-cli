@@ -50,7 +50,7 @@ def write_to_file(page_source):
 
 def internet_working():
 	try:
-		urllib.request.urlopen('https://pornhub.com', timeout=1)
+		urllib.request.urlopen('https://google.com', timeout=1)
 		return True
 	except urllib.request.URLError as err:
 		return False
