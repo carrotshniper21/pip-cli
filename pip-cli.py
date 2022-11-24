@@ -112,6 +112,7 @@ def main():
 
 main()
 
+#testing links change this later
 def setupChrome():
         opts = ChromeOptions()
         driver2 = webdriver.Chrome(options=opts)
