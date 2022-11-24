@@ -112,11 +112,6 @@ def main():
 
 main()
 
-def bashInit():
-        command = subprocess.run(['/home/archiso/Desktop/pip-cli/main.sh'], capture_output=False, text=False, shell=True)
-        print(command)
-bashInit()
-
 def setupChrome():
         opts = ChromeOptions()
         driver2 = webdriver.Chrome(options=opts)
