@@ -1,9 +1,11 @@
-==#!/usr/bin/python
+#!/usr/bin/python                                                                                                                                                                                                                             main.py                                                                                                                                                                                                                                       #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-import urllib, re
+import urllib, re, os
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
+from selenium.webdriver import ChromeOptions, Chrome
+
 URL = "https://vipstream.tv/home"
 urls = '''https://vipstream.tv/genre/action
 https://vipstream.tv/genre/action-adventure
@@ -36,9 +38,11 @@ https://vipstream.tv/genre/western'''
 
 urls = urls.replace("https://vipstream.tv/genre","")
 
-
-print('''
-    ____  ________        ________    ____
+os.system('''
+RED='\033[0;36m'
+NC='\033[0m' # No Color
+cat << EOF
+${RED}
    / __ \/  _/ __ \      / ____/ /   /  _/
   / /_/ // // /_/ /_____/ /   / /    / /
  / ____// // ____/_____/ /___/ /____/ /
@@ -46,7 +50,8 @@ print('''
 
      Made by eat my nuts#4595
        Credits to 4ce#6574
-''')
+${NC}
+EOF''')
 
 def SetupFirefox():
         options = webdriver.FirefoxOptions()
@@ -75,8 +80,8 @@ def GetGenres(driver):
 
 
 
-def GetUrlSource(url, driver):
-    driver.get(url)
+def GetUrlSource(URL, driver):
+    driver.get(URL)
     page_source = driver.page_source
     driver.close()
     return page_source
@@ -98,7 +103,7 @@ def main():
         if internet_working():
                 driver = SetupFirefox()
                 links = GetGenres(driver)
-        #write_to_file(GetUrlSource(URL, driver))
+                write_to_file(GetUrlSource(URL, driver))
                 try:
                         driver.close()
                 except:
@@ -107,4 +112,21 @@ def main():
                 print(urls)
 
 main()
+
+def setupChrome():
+        opts = ChromeOptions()
+        driver2 = webdriver.Chrome(options=opts)
+        Join = input('''
+Choose genre: ''')
+        if Join.lower() == 'kids':
+          driver2.get("https://vipstream.tv/genre/kids")
+        elif Join.lower() == 'horror':
+          driver2.get('https://vipstream.tv/genre/horror')
+        elif Join.lower() == 'soap':
+          driver2.get('https://vipstream.tv/genre/soap')
+        else:
+          print("Sorry for asking...")
+
+setupChrome()
+
 
