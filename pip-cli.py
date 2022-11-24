@@ -1,13 +1,11 @@
-#!/usr/bin/python                                                                                                                                                                                                                             main.py                                                                                                                                                                                                                                       #!/usr/bin/python
-# -*- coding: UTF-8 -*-
-import urllib, re, os
+mport urllib, re, os, subprocess
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver import ChromeOptions, Chrome
 
 URL = "https://vipstream.tv/home"
-urls = '''https://vipstream.tv/genre/action
+urls = ('''https://vipstream.tv/genre/action
 https://vipstream.tv/genre/action-adventure
 https://vipstream.tv/genre/adventure
 https://vipstream.tv/genre/animation
@@ -34,15 +32,16 @@ https://vipstream.tv/genre/thriller
 https://vipstream.tv/genre/tv-movie
 https://vipstream.tv/genre/war
 https://vipstream.tv/genre/war-politics
-https://vipstream.tv/genre/western'''
+https://vipstream.tv/genre/western
+''')
 
-urls = urls.replace("https://vipstream.tv/genre","")
+genres = urls.replace("https://vipstream.tv/genre","")
 
 os.system('''
-RED='\033[0;36m'
+COLOR='\033[1;31m'
 NC='\033[0m' # No Color
 cat << EOF
-${RED}
+${COLOR}
    / __ \/  _/ __ \      / ____/ /   /  _/
   / /_/ // // /_/ /_____/ /   / /    / /
  / ____// // ____/_____/ /___/ /____/ /
@@ -109,15 +108,19 @@ def main():
                 except:
                         pass
 
-                print(urls)
+                print(links)
 
 main()
+
+def bashInit():
+        command = subprocess.run(['/home/archiso/Desktop/pip-cli/main.sh'], capture_output=False, text=False, shell=True)
+        print(command)
+bashInit()
 
 def setupChrome():
         opts = ChromeOptions()
         driver2 = webdriver.Chrome(options=opts)
-        Join = input('''
-Choose genre: ''')
+        Join = input('''Choose genre: ''')
         if Join.lower() == 'kids':
           driver2.get("https://vipstream.tv/genre/kids")
         elif Join.lower() == 'horror':
@@ -125,8 +128,14 @@ Choose genre: ''')
         elif Join.lower() == 'soap':
           driver2.get('https://vipstream.tv/genre/soap')
         else:
-          print("Sorry for asking...")
+          print("Wrong Choice. Try Again")
 
 setupChrome()
+
+
+
+
+
+
 
 
