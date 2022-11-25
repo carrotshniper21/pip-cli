@@ -29,6 +29,9 @@ tar -xvzf geckodriver*
 chmod +x geckodriver
 export PATH=$PATH:/path-to-extracted-file/.
 ```
+### Mac Install
+```brew install geckodriver```
+  
 ## Chromium Chromedriver
 ### Linux Install
 ```sudo apt-get install unzip;
@@ -44,8 +47,5 @@ mv chromedriver $HOME/bin
 echo "export PATH=$PATH:$HOME/bin" >> $HOME/.bash_profile
 ```
   
-### OSX
-`brew install geckodriver`
-
 ### Windows
 `Not Supported Yet`
