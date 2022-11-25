@@ -33,4 +33,5 @@ export PATH=$PATH:/path-to-extracted-file/.
 ### OSX
 `brew install geckodriver`
 
-### windows ??? idk bro
+### Windows
+`Not Supported Yet`
