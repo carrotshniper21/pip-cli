@@ -1,6 +1,5 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-import os
 import re
 import time
 import urllib
@@ -12,19 +11,14 @@ from selenium.webdriver.common.by import By
 
 def display_message():
     #
-    os.system('\n'
-              'COLOR=\'\033[1;31m\'\n'
-              'NC=\'\033[0m\' # No Color\n'
-              'cat << EOF\n'
-              '${COLOR}\n'
-              '   / __ \/  _/ __ \      / ____/ /   /  _/\n'
-              '  / /_/ // // /_/ /_____/ /   / /    / /\n'
-              ' / ____// // ____/_____/ /___/ /____/ /\n'
-              '/_/   /___/_/          \____/_____/___/\n'
-              '       Made by eat my nuts#4595\n'
-              '          Credits to 4ce#6574\n'
-              '${NC}\n'
-              'EOF')
+    print(''' \033[34m
+   / __ \/  _/ __ \      / ____/ /   /  _/
+  / /_/ // // /_/ /_____/ /   / /    / /
+ / ____// // ____/_____/ /___/ /____/ /
+/_/   /___/_/          \____/_____/___/
+      Made by eat my nuts#4595
+         Credits to 4ce#6574
+    \033[0m  ''')
 
 
 BASE_URL = "https://vipstream.tv/home"
