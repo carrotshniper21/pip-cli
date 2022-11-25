@@ -22,7 +22,7 @@
 # Pre-Requisites
 
 ## Mozilla's Geckodriver
-### manual linux install
+### linux install
 ```shell
 wget https://github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux64.tar.gz
 tar -xvzf geckodriver*
@@ -30,6 +30,10 @@ chmod +x geckodriver
 export PATH=$PATH:/path-to-extracted-file/.
 ```
 ## Chromium Chromedriver
+### linux install
+```sudo apt-get install unzip;
+wget -O /tmp/chromedriver.zip http://chromedriver.storage.googleapis.com/2.10/chromedriver_linux64.zip && sudo unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/;
+```
 
 ### OSX
 `brew install geckodriver`
