@@ -11,8 +11,8 @@
 <video/>
 
 </div>
-# run 
-`python pip_cli.py`
+  
+# run `python pip_cli.py`
 
 # Pre-requisits
 
