@@ -1,10 +1,13 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-import urllib, re, os, subprocess
+import os
+import urllib
+
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
+from selenium.webdriver import ChromeOptions
+# from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-from selenium.webdriver import ChromeOptions, Chrome
+
 
 def display_message():
     os.system('''
@@ -20,12 +23,12 @@ ${COLOR}
           Credits to 4ce#6574
 ${NC}
 EOF''')
-display_message()
 
 
 BASE_URL = "https://vipstream.tv/home"
 
-#genres = genres.replace("https://vipstream.tv/genre/", "")
+
+# genres = genres.replace("https://vipstream.tv/genre/", "")
 
 
 def setup_firefox():
@@ -54,11 +57,11 @@ def get_genres(web_driver):
 
 
 # ALMOST DONE Create an object to hold list of genres and links
-# TODO 2d array of movie titles and links
+# TODO 2D array of movie titles and links
 # TODO Finding the download link
 
-def get_url_source(BASE_URL, browser_headless):
-    browser_headless.get(BASE_URL)
+def get_url_source(url, browser_headless):
+    browser_headless.get(url)
     page_source = browser_headless.page_source
     browser_headless.close()
     return page_source
@@ -78,19 +81,34 @@ def internet_working():
 
 
 def display_genres_to_user(genre_links):
-    for i in genre_links:
-        print(genre_links(i))
+    for i, link in enumerate(genre_links):
+        print(i + 1, link.replace("https://vipstream.tv/genre/", ""))
 
 
 def get_user_genre_choice(start_choice, last_choice):
-    return input(f'Choose genre ({start_choice}-{last_choice} ): ')
+    return input(f'\nChoose genre ({start_choice}-{last_choice}): ')
     # looking up https://docs.python.org/3/tutorial/inputoutput.html
+
+
+def validate_user_genre_choice(user_choice, genre_links):
+    if user_choice.isdigit():
+        if 1 <= int(user_choice) <= get_genre_count(genre_links):
+            return True
+        else:
+            return False
+    else:
+        return False
+
+
+def convert_to_int(user_choice):
+    return int(user_choice)
 
 
 def get_genre_count(links):
     return len(links)
 
-def load_genre(web_driver, user_choice):
+
+def movies_from_genre(web_driver, user_choice):
     movies = web_driver.find_elements(By.XPATH, "//a[@href]")
     movie_links = []
     for movie in movies:
@@ -99,62 +117,45 @@ def load_genre(web_driver, user_choice):
             return movie_links
 
 
-# you shouldn't just delete all of the notes that help you remember what shit does
-# instead you should rewrite or replace the comments with more summarized versions
-# just keep it simple
-
-# yeah this shit is starting to get confusing
-
 def parse_movies(movie_links):
-    print("ok")
+    for movie in movie_links:
+        print(movie)
+
+
+def web_driver_soft_close(web_driver):
+    try:
+        web_driver.close()
+    except:
+        pass
+
+
+def loading_message():
+    print("Loading Selections...\n")
 
 
 def main():
     display_message()
+    loading_message()
+
     if internet_working():
-        chrome = setup_chrome()
-        links = get_genres(chrome)
+        web_driver = setup_firefox()
+        genre_links = get_genres(web_driver)
+        display_genres_to_user(genre_links)
+        user_choice = get_user_genre_choice(1, get_genre_count(genre_links))
+        print("User choice: ", user_choice)
+        # loop until user enters valid choice
+        while not validate_user_genre_choice(user_choice, genre_links):
+            print("Invalid choice, try again")
+            user_choice = get_user_genre_choice(1, get_genre_count(genre_links))
+        user_choice = convert_to_int(user_choice)
 
-        display_genres_to_user(links)
+        web_driver.get(genre_links[user_choice - 1])
+        movie_links = movies_from_genre(web_driver, user_choice)
+        parse_movies(movie_links)
 
-        # asking the user from dynamically counting the links
-        choice = get_user_genre_choice(1, get_genre_count(links))
-        # starting to user the driver to display list of movies from that ge
-        load_genre(chrome, choice)
-
-        try:
-            chrome.close()
-        except:
-            pass
-
-# this is only test code leave here
-
-
-# case switch in python google
-# also instead of typing the genre name you can just make the user choose a number
-# starting from 0 - max_choice
-
-# stop saying sorry and saying you're a noob
-# just focus on what's happening with the code
-
-# TODO: work on making chrome driver HEADLESS AGAIN!!!
+        Finally: web_driver_soft_close(web_driver)
+    else:
+        print("No internet connection")
 
 
-# we need that datatype with all the links in the one array
-# [link1,link2, link3]
-# we use this datastructure then we just
-#  check if choice is valid integer
-# then webdriver.get(urls[choice])
-# so how do we get the urls from the [link1, link2, link3]
-# im just confused how we get the urls from the array
-# choose any number from the array by taking the name of the array arrayName[number of item you want from array (0-arrayName(length))]
-
-# so we get the integer input? like
-# just normal user input
-# check if its (1-28)
-# if user didn't write 1-28 then show an error and tell the user to choose number between 1-28
-# TODO: create a choice loop (retry function)
-# worry about it LATER
-# but make a note of what you want to do
-
-
+main()
