@@ -52,10 +52,6 @@ def get_genres(web_driver):
     return links
 
 
-# ALMOST DONE Create an object to hold list of genres and links
-# TODO 2D array of movie titles and links
-# TODO Finding the download link
-
 def get_url_source(url, browser_headless):
     browser_headless.get(url)
     page_source = browser_headless.page_source
