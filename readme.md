@@ -33,7 +33,7 @@ export PATH=$PATH:/path-to-extracted-file/.
 ### linux install
 ```sudo apt-get install unzip;
 wget -O /tmp/chromedriver.zip http://chromedriver.storage.googleapis.com/2.10/chromedriver_linux64.zip && sudo unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/;
-export PATH=$PATH:/path/to/driver/chrome-driver
+export PATH=$PATH:/path/to/driver/chrome-driver/.
 ```
 
 ### OSX
