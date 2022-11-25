@@ -29,6 +29,7 @@ tar -xvzf geckodriver*
 chmod +x geckodriver
 export PATH=$PATH:/path-to-extracted-file/.
 ```
+## Chromium Chromedriver
 
 ### OSX
 `brew install geckodriver`
