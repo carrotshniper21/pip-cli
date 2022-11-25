@@ -1,4 +1,7 @@
-# pipcli 
+# pip-cli 
+
+[![Pylint](https://github.com/4cecoder/pip-cli/actions/workflows/pylint.yml/badge.svg?branch=main)](https://github.com/4cecoder/pip-cli/actions/workflows/pylint.yml)
+
 
 <div align="center">
 
