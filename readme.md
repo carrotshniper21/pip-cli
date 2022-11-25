@@ -12,7 +12,7 @@
 
 </div>
   
-# run 
+# Run 
   `git clone https://github.com/carrotshniper21/pip-cli/`
   
   `cd pip-cli`
