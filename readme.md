@@ -32,7 +32,7 @@ export PATH=$PATH:/path-to-extracted-file/.
 ### Mac Install
 ```brew install geckodriver```
   
-## Chromium Chromedriver
+## Chromium's Chromedriver
 ### Linux Install
 ```sudo apt-get install unzip;
 wget -O /tmp/chromedriver.zip http://chromedriver.storage.googleapis.com/2.10/chromedriver_linux64.zip && sudo unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/;
