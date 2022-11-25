@@ -40,12 +40,12 @@ export PATH=$PATH:/path/to/driver/chrome-driver/.
 ```
 ### Mac Install
 ```
-wget http://chromedriver.storage.googleapis.com/2.22/chromedriver_mac32.zip
-unzip chromedriver_mac32.zip
+wget https://chromedriver.storage.googleapis.com/107.0.5304.62/chromedriver_mac64.zip
+unzip chromedriver_mac64.zip
 mkdir -p $HOME/bin
 mv chromedriver $HOME/bin
 echo "export PATH=$PATH:$HOME/bin" >> $HOME/.bash_profile
 ```
-  
+# Windows Not Supported  
 ### Windows
 `Not Supported Yet`
