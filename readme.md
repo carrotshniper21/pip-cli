@@ -12,7 +12,10 @@
 
 </div>
   
-# run `python pip_cli.py`
+# run 
+  `git clone https://github.com/carrotshniper21/pip-cli/`
+  `cd pip-cli`
+  `python pip_cli.py`
 
 # Pre-requisits
 
