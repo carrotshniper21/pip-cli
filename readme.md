@@ -23,7 +23,7 @@ chmod +x geckodriver
 export PATH=$PATH:/path-to-extracted-file/.
 ```
 
-# OSX
+### OSX
 `brew install geckodriver`
 
-## windows ??? idk bro
+### windows ??? idk bro
