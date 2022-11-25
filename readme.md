@@ -36,7 +36,8 @@ wget -O /tmp/chromedriver.zip http://chromedriver.storage.googleapis.com/2.10/ch
 export PATH=$PATH:/path/to/driver/chrome-driver/.
 ```
 ### Mac Install
-```wget http://chromedriver.storage.googleapis.com/2.22/chromedriver_mac32.zip
+```
+wget http://chromedriver.storage.googleapis.com/2.22/chromedriver_mac32.zip
 unzip chromedriver_mac32.zip
 mkdir -p $HOME/bin
 mv chromedriver $HOME/bin
