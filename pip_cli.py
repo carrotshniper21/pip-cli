@@ -52,7 +52,6 @@ def get_genres(web_driver):
 def get_url_source(url, browser_headless):
 	browser_headless.get(url)
 	page_source = browser_headless.page_source
-	browser_headless.close()
 	return page_source
 
 
