@@ -158,4 +158,5 @@ def main():
         print("No internet connection")
 
 
-main()
+if __name__ == '__main__':
+    main()
