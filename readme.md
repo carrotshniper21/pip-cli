@@ -11,3 +11,19 @@
 <video/>
 
 </div>
+
+# Pre-requisits
+
+## Mozilla's Geckodriver
+### manual linux install
+```shell
+wget https://github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux64.tar.gz
+tar -xvzf geckodriver*
+chmod +x geckodriver
+export PATH=$PATH:/path-to-extracted-file/.
+```
+
+# OSX
+`brew install geckodriver`
+
+## windows ??? idk bro
