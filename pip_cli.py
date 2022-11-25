@@ -10,6 +10,7 @@ from selenium.webdriver.common.by import By
 
 
 def display_message():
+    #
     os.system('\n'
               'COLOR=\'\033[1;31m\'\n'
               'NC=\'\033[0m\' # No Color\n'
@@ -26,6 +27,7 @@ def display_message():
 
 
 BASE_URL = "https://vipstream.tv/home"
+
 
 def setup_firefox():
     options = webdriver.FirefoxOptions()
@@ -130,7 +132,17 @@ def main():
     loading_message()
 
     if internet_working():
-        web_driver = setup_firefox()
+        # choose browser firefox or chrome
+        print ("Choose browser:\n1. Firefox\n2. Chrome")
+        browser_choice = input("\n: ")
+        if browser_choice == "1":
+             web_driver = setup_firefox()
+        elif input == "2":
+            web_driver = setup_chrome()
+        else:
+            print("Invalid input cannot setup web_driver")
+            return
+
         genre_links = get_genres(web_driver)
         display_genres_to_user(genre_links)
         user_choice = get_user_genre_choice(1, get_genre_count(genre_links))
