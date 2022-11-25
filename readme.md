@@ -19,7 +19,7 @@
   
   `python pip_cli.py`
 
-# Pre-requisits
+# Pre-Requisites
 
 ## Mozilla's Geckodriver
 ### manual linux install
