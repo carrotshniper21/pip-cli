@@ -10,25 +10,23 @@ from selenium.webdriver.common.by import By
 
 
 def display_message():
-    os.system('''
-COLOR='\033[1;31m'
-NC='\033[0m' # No Color
-cat << EOF
-${COLOR}
-   / __ \/  _/ __ \      / ____/ /   /  _/
-  / /_/ // // /_/ /_____/ /   / /    / /
- / ____// // ____/_____/ /___/ /____/ /
-/_/   /___/_/          \____/_____/___/
-       Made by eat my nuts#4595
-          Credits to 4ce#6574
-${NC}
-EOF''')
+    #
+    os.system('\n'
+              'COLOR=\'\033[1;31m\'\n'
+              'NC=\'\033[0m\' # No Color\n'
+              'cat << EOF\n'
+              '${COLOR}\n'
+              '   / __ \/  _/ __ \      / ____/ /   /  _/\n'
+              '  / /_/ // // /_/ /_____/ /   / /    / /\n'
+              ' / ____// // ____/_____/ /___/ /____/ /\n'
+              '/_/   /___/_/          \____/_____/___/\n'
+              '       Made by eat my nuts#4595\n'
+              '          Credits to 4ce#6574\n'
+              '${NC}\n'
+              'EOF')
 
 
 BASE_URL = "https://vipstream.tv/home"
-
-
-# genres = genres.replace("https://vipstream.tv/genre/", "")
 
 
 def setup_firefox():
@@ -55,10 +53,6 @@ def get_genres(web_driver):
             links.append(link)
     return links
 
-
-# ALMOST DONE Create an object to hold list of genres and links
-# TODO 2D array of movie titles and links
-# TODO Finding the download link
 
 def get_url_source(url, browser_headless):
     browser_headless.get(url)
@@ -138,11 +132,20 @@ def main():
     loading_message()
 
     if internet_working():
-        web_driver = setup_firefox()
+        # choose browser firefox or chrome
+        print ("Choose browser:\n1. Firefox\n2. Chrome")
+        browser_choice = input("\n: ")
+        if browser_choice == "1":
+             web_driver = setup_firefox()
+        elif input == "2":
+            web_driver = setup_chrome()
+        else:
+            print("Invalid input cannot setup web_driver")
+            return
+
         genre_links = get_genres(web_driver)
         display_genres_to_user(genre_links)
         user_choice = get_user_genre_choice(1, get_genre_count(genre_links))
-        print("User choice: ", user_choice)
         # loop until user enters valid choice
         while not validate_user_genre_choice(user_choice, genre_links):
             print("Invalid choice, try again")
@@ -158,4 +161,5 @@ def main():
         print("No internet connection")
 
 
-main()
+if __name__ == '__main__':
+    main()
