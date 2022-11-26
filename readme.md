@@ -52,7 +52,7 @@ echo "export PATH=$PATH:$HOME/bin" >> $HOME/.bash_profile
 
 # Product Description
 ### PIP-CLI
-```View new movie subtitles by genre```
+```View new movie subtitles by genre in the terminal```
 
   
 # PRODUCT ROADMAP
