@@ -212,3 +212,6 @@ def main():
 
 if __name__ == '__main__':
     main()
+    
+# TODO fetch subtitles from subscene.com headless
+# TODO be able to get subtitles without being directed to a cloudfare page
