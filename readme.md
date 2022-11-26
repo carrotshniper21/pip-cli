@@ -51,8 +51,10 @@ echo "export PATH=$PATH:$HOME/bin" >> $HOME/.bash_profile
 `Not Supported Yet`
 
 # TODO
+```
 - Make it to where the user can choose to watch the video or get the subtitles
   
 - Implemenet terminal UI
   
 - Get working for windows
+```
