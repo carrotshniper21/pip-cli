@@ -58,7 +58,7 @@ echo "export PATH=$PATH:$HOME/bin" >> $HOME/.bash_profile
 
   
 # PRODUCT ROADMAP
-- Make it to where the user can choose to watch the video or get the subtitles
+- Make it to where the user can get the subtitles
   
 - Implemenet terminal UI
   
