@@ -17,6 +17,8 @@
   
   `cd pip-cli`
   
+  `pip install -r requirements.txt`
+  
   `python pip_cli.py`
 
 # Pre-Requisites
