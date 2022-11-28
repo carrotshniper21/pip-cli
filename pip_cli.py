@@ -8,18 +8,7 @@ from selenium import webdriver
 from selenium.webdriver import ChromeOptions
 from selenium.webdriver.common.by import By
 
-
-def display_message():
-    #
-    print(''' \033[34m
-   / __ \/  _/ __ \      / ____/ /   /  _/
-  / /_/ // // /_/ /_____/ /   / /    / /
- / ____// // ____/_____/ /___/ /____/ /
-/_/   /___/_/          \____/_____/___/
-      Made by eat my nuts#4595
-         Credits to 4ce#6574
-    \033[0m  ''')
-
+import logo
 
 BASE_URL = "https://vipstream.tv/home"
 
@@ -53,6 +42,20 @@ def get_url_source(url, browser_headless):
     browser_headless.get(url)
     page_source = browser_headless.page_source
     return page_source
+
+
+def get_movie_src(genre_links, user_choice, web_driver):
+    return get_url_source(genre_links[user_choice - 1], web_driver)
+
+
+def get_movies_from_genre(movie_src):
+    # get movies from genre
+    regex = re.compile(r'href="(.+?)"')
+    regex2 = re.compile(r'/movie/.+?')
+    movies = regex.findall(movie_src)
+    movies = list(filter(regex2.search, movies))
+    movies = list(dict.fromkeys(movies))
+    return movies
 
 
 def write_to_file(page_source):
@@ -115,7 +118,7 @@ def loading_message():
 
 
 def main():
-    display_message()
+    print(logo.display_message())
     prefix = "https://vipstream.tv"
 
     if internet_working():
@@ -138,6 +141,7 @@ def main():
         display_genres_to_user(genre_links)
 
         user_choice = get_user_genre_choice(1, get_genre_count(genre_links))
+        print('\n')
 
         # loop until user enters valid choice
         while not validate_user_genre_choice(user_choice, genre_links):
@@ -145,13 +149,8 @@ def main():
             user_choice = get_user_genre_choice(1, get_genre_count(genre_links))
         user_choice = convert_to_int(user_choice)
 
-        # get movies from genre
-        regex = re.compile(r'href="(.+?)"')
-        regex2 = re.compile(r'/movie/.+?')
-        movie_src = get_url_source(genre_links[user_choice - 1], web_driver)
-        movies = regex.findall(movie_src)
-        movies = list(filter(regex2.search, movies))
-        movies = list(dict.fromkeys(movies))
+        movie_src = get_movie_src(genre_links, user_choice, web_driver)
+        movies = get_movies_from_genre(movie_src)
 
         # get movie titles
         regex3 = re.compile(r'<h2 class="film-name">.+?</h2>')
@@ -161,7 +160,7 @@ def main():
         # titles = all title="(.+?)"
         regex4 = re.compile(r'title="(.+?)"')
         # titles to string
-        titles = regex4.findall(str(titles))
+    
 
         # display titles list to user
 
@@ -171,20 +170,14 @@ def main():
         # get user choice
         user_movie_choice = input(f"\nChoose movie(1-{len(titles)}): ")
         user_movie_choice = convert_to_int(user_movie_choice)
-        # print("Loading Movies...")
+        print("Loading Titles...")
+        print(titles)
+        print(movies)
+
         movie_url = prefix + movies[user_movie_choice - 1]
         movie_page_src = get_url_source(movie_url, web_driver)
 
-        # <li class="nav-item">
-        # <a class="nav-link btn btn-sm btn-secondary btn-radius link-item default" data-linkid="9086422" href="/watch-movie/watch-the-lair-full-89620.9086422"
-        # id="watch-9086422"
-        # onclick="watch(this,event)" title="Server UpCloud">
-        # <i class="fas fa-play mr-2"></i><span>UpCloud</span>
-        # </a>
-        # </li>
-
-        # get href from <a class="nav-link btn btn-sm btn-secondary btn-radius link-item default" data-linkid="9086422" href="/watch-movie/watch-the-lair-full-89620.9086422"
-
+        # i dont know what the fuck this does tbh
         regex5 = re.compile(r'href="(.+?)"')
         regex6 = re.compile(r'/watch-movie/.+?')
         movie_servers = regex5.findall(movie_page_src)
@@ -192,26 +185,36 @@ def main():
         movie_servers = list(dict.fromkeys(movie_servers))
         movie_servers = [prefix + link for link in movie_servers]
         movie_servers.pop(0)
+
         # get server names from span
         regex7 = re.compile(r'<span>.+?</span>')
         server_names = regex7.findall(movie_page_src)
-        # ['0.0', "If current server doesn't work please try other servers below.", 'UpCloud', 'Vidcloud', 'Streamlare', '2022', '80m', '2022', '99m', '2022', '84m', 'SS 1', 'EPS 1', '2022', '97m', '2022', '103m', '2022', '124m', '2022', '107m', '2022', '99m', 'SS 1', 'EPS 3', '2022', '102m', 'SS 1', 'EPS 4', '2022', '84m', 'SS 1', 'EPS 3', '2022', '87m', '2022', '95m']
+
         # refine server names ( there is only 3)
         server_names = [name.replace('<span>', '').replace('</span>', '') for name in server_names]
         server_names = server_names[2:5]
-        server_choice = input(f"\nChoose server(1-{len(server_names)}): ")
-        server_choice = convert_to_int(server_choice)
-        server_url = movie_servers[server_choice - 1]
-        server_page_src = get_url_source(server_url, web_driver)
-        # save server page source to file
-        write_to_file(server_page_src)
-        print("finding video...")
+        print(server_names)
 
+
+        server_choice = input(f"\nChoose server(1-{len(server_names)}): ")
+        print("You have chosen dis server bro")
+        server_choice = convert_to_int(server_choice)
+        print(server_names[server_choice - 1])
+
+        # server_choice = convert_to_int(server_choice)
+        # server_url = movie_servers[server_choice - 1]
+        # server_page_src = get_url_source(server_url, web_driver)
+        # save server page source to file
+        # write_to_file(server_page_src)
+
+        print("finding video... Not... lol")
+
+        # close the driver on the user
         web_driver_soft_close(web_driver)
 
 
 if __name__ == '__main__':
     main()
-    
+
 # TODO fetch subtitles from subscene.com headless
 # TODO be able to get subtitles without being directed to a cloudfare page

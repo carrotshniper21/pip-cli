@@ -1,71 +1,53 @@
 import pytermgui as ptg
-import re
-import time
-import urllib
+import config
+import pip_cli
+import logo
 
-from selenium import webdriver
-from selenium.webdriver import ChromeOptions
-from selenium.webdriver.common.by import By
+banner = logo.display_message()
 
-BASE_URL = "https://vipstream.tv/home"
+OUTPUT = {}
 
-def setup_firefox():
-    options = webdriver.FirefoxOptions()
-    options.headless = True
-    driver_f = webdriver.Firefox(options=options)
-    driver_f.get(BASE_URL)
-    return driver_f
+ 
+def submit(manager: ptg.WindowManager, window: ptg.Window) -> None:
+    for widget in window:
+        if isinstance(widget, ptg.InputField):
+            OUTPUT[widget.prompt] = widget.value
+            continue
 
-def get_genres(web_driver):
-    elems = web_driver.find_elements(By.XPATH, "//a[@href]")
-    links = []
-    for elem in elems:
-        link = elem.get_attribute('href')
-        if 'genre' in elem.get_attribute('href'):
-            return links
+        if isinstance(widget, ptg.Container):
+            label, field = iter(widget)
+            OUTPUT[label.value] = field.value
 
-
-CONFIG = """
-config:
-    Label:
-        styles:
-            value: dim bold
-    
-    Window:
-        styles:
-            border: '60'
-            corner: '60'
-    
-    Container:
-        styles:
-            border: '96'
-            corner: '96'
-"""
+    manager.stop()
 
 with ptg.YamlLoader() as loader:
-    loader.load(CONFIG)
+    loader.load(config.CONFIG)
+
 
 with ptg.WindowManager() as manager:
     window = (
         ptg.Window(
             "",
             ptg.Container(
-		"""[33 bold]
-    ____  ________        ________    ____
-   / __ \/  _/ __ \      / ____/ /   /  _/
-  / /_/ // // /_/ /_____/ /   / /    / /  
- / ____// // ____/_____/ /___/ /____/ /   
-/_/   /___/_/          \____/_____/___/   
-               """,
+                f"{banner}"
             ),
             ptg.Container(
-        f"[33 bold]  "
+                "",
+                ptg.InputField(
+                    "", multiline=True
+                ),
             ),
             "",
             ["Submit", lambda *_: submit(manager, window)],
             width=60,
+            box="DOUBLE",
         )
         .center()
     )
 
+    # For the screenshot's sake
+    window.select(0)
+
     manager.add(window)
+
+#pprint(OUTPUT)
