@@ -37,9 +37,40 @@ soup = parse_html(content)
 subs = extract_links(soup)
 subs = list(set([i for i in subs if i.startswith('/subtitles')]))
 
+def get_subtitle_count(subs):
+    return len(subs)
+
+def validate_user_subtitle_choice(user_choice, subs):
+    if user_choice.isdigit():
+        if 1 <= int(user_choice) <= get_subtitle_count(subs):
+            return True
+        else:
+            return False
+    else:
+        return False
+
+def convert_to_int(user_choice):
+    return int(user_choice)
+
 #subs = fuzzy_match(search_string, subs
 
 def display_subtitle_links(sub):
-    for i, sub in enumerate(subs, start = 1):
-        print(i, sub)
+    for i, sub in enumerate(subs):
+        print(i + 1, sub.replace("/subtitles/", ""))
 display_subtitle_links(subs)
+
+def get_user_subtitle_choice(start_choice, last_choice):
+    return input(f'\nChoose Subtitle ({start_choice}-{last_choice}): ')
+
+def main(subs):
+    user_choice = get_user_subtitle_choice(1, get_subtitle_count(subs))
+    print('\n')
+
+        # loop until user enters valid choice
+    while not validate_user_subtitle_choice(user_choice, subs):
+        print("Invalid choice, try again")
+        user_choice = get_user_subtitle_choice(1, get_subtitle_count(subs))
+        user_choice = convert_to_int(user_choice)
+
+if __name__ == '__main__':
+    main(subs)
