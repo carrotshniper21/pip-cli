@@ -1,6 +1,8 @@
 import requests
 import bs4
-import fuzzywuzzy as fw
+import urllib
+
+#import fuzzywuzzy as fw
 
 
 web_url = "https://subscene.com"
@@ -24,12 +26,12 @@ def extract_links(soup):
         subtitle_links.append(i.get('href'))
     return subtitle_links
 
-def fuzzy_match(search_string, subs_list):
-    # import fuzzywuzzy
+#def fuzzy_match(search_string, subs_list):
+#    import fuzzywuzzy
 
-    fw.fuzz.ratio(search_string, subs_list)
-    # return the closest match
-    return fw.process.extractOne(search_string, subs_list)
+#    fw.fuzz.ratio(search_string, subs_list)
+#    return the closest match
+#    return fw.process.extractOne(search_string, subs_list)
 
 search_string = input("Search Subtitles: ")
 content = search_subtitles(search_string)
@@ -41,6 +43,8 @@ def get_subtitle_count(subs):
     return len(subs)
 
 def validate_user_subtitle_choice(user_choice, subs):
+    if isinstance(user_choice, int):
+        user_choice = str(user_choice)
     if user_choice.isdigit():
         if 1 <= int(user_choice) <= get_subtitle_count(subs):
             return True
@@ -70,7 +74,11 @@ def main(subs):
     while not validate_user_subtitle_choice(user_choice, subs):
         print("Invalid choice, try again")
         user_choice = get_user_subtitle_choice(1, get_subtitle_count(subs))
-        user_choice = convert_to_int(user_choice)
+
+    user_choice = convert_to_int(user_choice)
+    idx = int(user_choice) - 1
+    print(subs[idx])
+
 
 if __name__ == '__main__':
     main(subs)
