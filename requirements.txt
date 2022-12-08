@@ -1,7 +1,9 @@
-selenium==4.6.0
-pytermgui==7.3.0
-PyYAML==6.0
-beautifulsoup4==4.11.1
-requests==2.28.1
-httplib2==0.21.0
-lxml==4.9.1 
+selenium
+pytermgui
+PyYAML
+beautifulsoup4
+requests
+httplib2
+lxml
+slowprint
+cloudscraper
