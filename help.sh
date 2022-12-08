@@ -2,10 +2,8 @@
 
 display_help() {
     echo '''Usage: [option...] [-h] [-d]
-
             -h, --help              Display this message and exit
-            -d, --download          Download the selected media
-    '''
+            -d, --download          Download the selected media'''
 
     exit 1
 }
@@ -19,12 +17,21 @@ do
           ;;
 
       -d | --download)
-          exit 0
+          echo "Downloading..."
+          shift
           ;;
 
+      --) # End of all options
+          shift
+          break
+          ;;
       -*)
           echo "Error: Unknown option: $1" >&2
-          exit 1 
+          exit 1
+          ;;
+      *)  # No more options
+          break
           ;;
     esac
 done
+

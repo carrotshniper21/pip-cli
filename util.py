@@ -7,5 +7,10 @@ def internet_working():
     except urllib.request.URLError as err:
         return False
 
+
 def convert_to_int(user_choice):
     return int(user_choice)
+
+
+def convert_to_str(user_choice):
+    return str(user_choice)
