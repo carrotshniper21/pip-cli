@@ -2,31 +2,11 @@
 # -*- coding: UTF-8 -*-
 import re
 import time
-import urllib
-
-from selenium import webdriver
-from selenium.webdriver import ChromeOptions
-from selenium.webdriver.common.by import By
-
 import logo
+import emulation
+import util
 
-BASE_URL = "https://vipstream.tv/home"
-
-
-def setup_firefox():
-    options = webdriver.FirefoxOptions()
-    options.headless = True
-    driver_f = webdriver.Firefox(options=options)
-    driver_f.get(BASE_URL)
-    return driver_f
-
-
-def setup_chrome():
-    opts = ChromeOptions()
-    opts.headless = True
-    chrome_headless = webdriver.Chrome(options=opts)
-    return chrome_headless
-
+from selenium.webdriver.common.by import By
 
 def get_genres(web_driver):
     elems = web_driver.find_elements(By.XPATH, "//a[@href]")
@@ -63,14 +43,6 @@ def write_to_file(page_source):
         f.write(page_source)
 
 
-def internet_working():
-    try:
-        urllib.request.urlopen('https://google.com', timeout=1)
-        return True
-    except urllib.request.URLError as err:
-        return False
-
-
 def display_genres_to_user(genre_links):
     for i, link in enumerate(genre_links):
         print(i + 1, link.replace("https://vipstream.tv/genre/", ""))
@@ -82,7 +54,6 @@ def get_user_genre_choice(start_choice, last_choice):
 
 # looking up https://docs.python.org/3/tutorial/inputoutput.html
 
-
 def validate_user_genre_choice(user_choice, genre_links):
     if user_choice.isdigit():
         if 1 <= int(user_choice) <= get_genre_count(genre_links):
@@ -91,11 +62,6 @@ def validate_user_genre_choice(user_choice, genre_links):
             return False
     else:
         return False
-
-
-def convert_to_int(user_choice):
-    return int(user_choice)
-
 
 def get_genre_count(links):
     return len(links)
@@ -106,13 +72,6 @@ def parse_movies(movie_links):
         print(movie)
 
 
-def web_driver_soft_close(web_driver):
-    try:
-        web_driver.close()
-    except:
-        pass
-
-
 def loading_message():
     print("Loading Selections...\n")
 
@@ -121,20 +80,20 @@ def main():
     print(logo.display_message())
     prefix = "https://vipstream.tv"
 
-    if internet_working():
+    if util.internet_working():
         # choose browser firefox or chrome
         print("Choose browser:\n1. Firefox\n2. Chrome")
         browser_choice = input("Enter choice: ")
         # if browser choice is firefox
         if browser_choice == "1" or browser_choice == "firefox":
-            web_driver = setup_firefox()
+            web_driver = emulation.setup_firefox()
         # if browser choice is chrome
         elif input == "2" or browser_choice == "chrome":
             time.sleep(3)
-            web_driver = setup_chrome()
+            web_driver = emulation.setup_chrome()
         else:
             print("Invalid choice, defaulting to Firefox")
-            web_driver = setup_firefox()
+            web_driver = emulation.setup_firefox()
         loading_message()
 
         genre_links = get_genres(web_driver)
@@ -147,7 +106,7 @@ def main():
         while not validate_user_genre_choice(user_choice, genre_links):
             print("Invalid choice, try again")
             user_choice = get_user_genre_choice(1, get_genre_count(genre_links))
-        user_choice = convert_to_int(user_choice)
+        user_choice = util.convert_to_int(user_choice)
 
         movie_src = get_movie_src(genre_links, user_choice, web_driver)
         movies = get_movies_from_genre(movie_src)
@@ -160,7 +119,6 @@ def main():
         # titles = all title="(.+?)"
         regex4 = re.compile(r'title="(.+?)"')
         # titles to string
-    
 
         # display titles list to user
 
@@ -169,7 +127,7 @@ def main():
 
         # get user choice
         user_movie_choice = input(f"\nChoose movie(1-{len(titles)}): ")
-        user_movie_choice = convert_to_int(user_movie_choice)
+        user_movie_choice = util.convert_to_int(user_movie_choice)
         print("Loading Titles...")
         print(titles)
         print(movies)
@@ -195,14 +153,11 @@ def main():
         server_names = server_names[2:5]
         print(server_names)
 
-
         server_choice = input(f"\nChoose server(1-{len(server_names)}): ")
         print("You have chosen dis server bro")
-        server_choice = convert_to_int(server_choice)
+        server_choice = util.convert_to_int(server_choice)
         print(server_names[server_choice - 1])
 
-        # server_choice = convert_to_int(server_choice)
-        # server_url = movie_servers[server_choice - 1]
         # server_page_src = get_url_source(server_url, web_driver)
         # save server page source to file
         # write_to_file(server_page_src)
@@ -210,7 +165,7 @@ def main():
         print("finding video... Not... lol")
 
         # close the driver on the user
-        web_driver_soft_close(web_driver)
+        emulation.web_driver_soft_close(web_driver)
 
 
 if __name__ == '__main__':
