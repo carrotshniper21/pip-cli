@@ -82,3 +82,84 @@ def main(subs):
 
 if __name__ == '__main__':
     main(subs)
+
+# from pyfzf.pyfzf import FzfPrompt
+# from slowprint.slowprint import *
+# from bs4 import BeautifulSoup
+# from requests_html import HTMLSession
+# import requests
+# 
+# print('''
+#    __________ _________    ____  ________  __
+#   / ___/ ___// ____/   |  / __ \/ ____/ / / /
+#    \__ \\__ \/ __/ / /| | / /_/ / /   / /_/ / 
+#  ___/ /__/ / /___/ ___ |/ _, _/ /___/ __  /  
+# /____/____/_____/_/  |_/_/ |_|\____/_/ /_/   
+#                                                \n''')
+# web_url = "https://subscene.com"
+# headers = {
+#     'User-Agent': "Mozilla/5.0 (X11; Linux x86_64; rv:103.0) Gecko/20100101 Firefox/103.0"}
+# 
+# def search_subtitles(name):
+#     url = f"{web_url}/subtitles/searchbytitle"
+#     r = requests.post(url, headers=headers, params={'query': name})
+#     if r.status_code == 200:
+#         return r.content
+# 
+# def parse_html(content):
+#     soup = BeautifulSoup(content, 'lxml')
+#     return soup
+# 
+# def extract_links(soup):
+#     subtitle_links = []
+# 
+#     for i in soup.findAll('a'):
+#         subtitle_links.append(i.get('href'))
+#     return subtitle_links
+# 
+# slowprint("Search Subtitles: ", 0.5)
+# search_string = input("\n")
+# content = search_subtitles(search_string)
+# soup = parse_html(content)
+# subs = extract_links(soup)
+# subs = list(set([i for i in subs if i.startswith('/subtitles/')]))
+# fzf = FzfPrompt()
+# 
+# def get_subtitle_count(subs):
+#     return len(subs)
+# 
+# def validate_user_subtitle_choice(user_choice, subs):
+#     if isinstance(user_choice, int):
+#         user_choice = str(user_choice)
+#     if user_choice.isdigit():
+#         if 1 <= int(user_choice) <= get_subtitle_count(subs):
+#             return True
+#         else:
+#             return False
+#     else:
+#         return False
+# 
+# def convert_to_int(user_choice):
+#     return int(user_choice)
+# 
+# def display_subtitle_links(subs):
+#     choice = []
+#     for i, sub in enumerate(subs):
+#         choice.append("{}. {}".format(i + 1, sub.replace("/subtitles/", "")))
+# 
+#     selected = fzf.prompt(choice)
+# 
+#     if selected in choice:
+#         print(choice.index(selected))
+# 
+# display_subtitle_links(subs)
+# 
+# def main(selected, i):
+#     session = HTMLSession()
+#     r = session.get("https://subscene.com" + selected[0])
+#     sub_links = list(r.html.absolute_links)
+#     sub_links = list(set([r for r in sub_links if r.startswith('/subtitles/')]))
+#     print(sub_links)
+# 
+# if __name__ == '__main__':
+#     main(subs)
