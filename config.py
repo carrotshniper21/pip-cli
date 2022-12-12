@@ -1,4 +1,4 @@
-
+BASE_URL = "https://vipstream.tv/home"
 
 CONFIG = """
 config:
@@ -16,4 +16,3 @@ config:
             border: '96'
             corner: '96'
 """
-
