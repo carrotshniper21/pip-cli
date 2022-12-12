@@ -12,5 +12,10 @@ def convert_to_int(user_choice):
     return int(user_choice)
 
 
-def convert_to_str(user_choice):
-    return str(user_choice)
+def write_to_file(page_source):
+    with open('page_source.html', 'w') as f:
+        f.write(page_source)
+
+
+def slice_dict(dict):
+    return {k: dict[k] for k in dict.keys()}
