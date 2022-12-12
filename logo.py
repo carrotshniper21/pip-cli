@@ -1,4 +1,4 @@
-def logo():
+def pip_logo():
     return (str('''
     ____  ________        ________    ____
    / __ \/  _/ __ \      / ____/ /   /  _/
@@ -7,15 +7,15 @@ def logo():
 /_/   /___/_/          \____/_____/___/'''))
 
 
-def credits():
+def pip_credits():
     return str(('''
-      Made by eat my nuts#4595
-        Credits to 4ce#6574
+    Made by eat my nuts#4595
+      Credits to 4ce#6574
 '''))
 
 
-def full_logo():
-    return str(logo() + credits())
+def full_pip_logo():
+    return str(pip_logo() + pip_credits())
 
 
 def ascii_add_blue_color(message):
@@ -24,5 +24,5 @@ def ascii_add_blue_color(message):
     return blue_opening + message + blue_closing
 
 
-def display_message():
-    return ascii_add_blue_color(full_logo())
+def display_prettier_logo():
+    return ascii_add_blue_color(full_pip_logo())
