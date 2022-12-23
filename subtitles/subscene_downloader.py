@@ -6,15 +6,7 @@ from bs4 import BeautifulSoup
 import httplib2
 import os
 
-print(
-    """
-    __________ _________    ____  ________  __
-   / ___/ ___// ____/   |  / __ \/ ____/ / / /
-    \__ \\__ \/ __/ / /| | / /_/ / /   / /_/ /
-  ___/ /__/ / /___/ ___ |/ _, _/ /___/ __  /
- /____/____/_____/_/  |_/_/ |_|\____/_/ /_/
-                                                \n"""
-)
+
 web_url = "https://subscene.com"
 headers = {
     "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:103.0) Gecko/20100101 Firefox/103.0"
@@ -60,7 +52,7 @@ def display_subtitle_links(subs):
     for sub in subs:
         choice.append("https://subscene.com" + sub)
 
-    selected = fzf.prompt(subs)
+    selected = fzf.prompt(subs, "--reverse")
     sub_url = "https://subscene.com" + "".join(selected)
     return sub_url
 
@@ -81,10 +73,9 @@ def parse_url(sub_url):
 
 
 links = parse_url(sub_url)
-selected_url = fzf.prompt(links)
+selected_url = fzf.prompt(links, "--reverse")
 
-file_names = []
-file_names.append("".join(selected_url))
+file_names = ["".join(selected_url)]
 
 for file_name in file_names:
     file_name = file_name.replace("\r", "").replace("\n", "").strip()
@@ -111,9 +102,20 @@ for file_name in file_names:
                 with open(filename + ".zip", "wb") as fw:
                     fw.write(zipcontent)
 
+                filenames = []
+
                 with zipfile.ZipFile(f"{filename}.zip", "r") as zip_ref:
+                    zipfiles = zip_ref.infolist()
                     zip_ref.extractall()
+
+                    filenames = [zipinfo.filename for zipinfo in zipfiles]
+
+                    selected_subtitle = fzf.prompt(filenames, "--reverse")
+
+                    subtitle_choice = "".join(selected_subtitle)
+
+                    files = "".join(filenames)
 
                 os.remove(f"{filename}.zip")
 
-                print("...%s done!\n" % filename)
+                print("...%s done!\n" % files)
